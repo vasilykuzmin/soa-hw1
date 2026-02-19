@@ -1,0 +1,125 @@
+Buyer: {
+    shape: person
+    label: Покупатель
+}
+
+Seller: {
+    shape: person
+    label: Продавец
+}
+
+Main System: {
+    Web Application: {
+        label: Web приложение
+        shape: rectangle
+    }
+
+    Mobile Application: {
+        label: Мобильное приложение
+        shape: rectangle
+    }
+    
+    API Gateway: {
+        label: API Gateway\nnginx
+        shape: rectangle
+    }
+    
+    Web Application -> API Gateway
+    Mobile Application -> API Gateway
+
+    User Service: {
+        label: User service\nPython
+        shape: rectangle
+    }
+
+    User Database: {
+        label: User Database\nPostgreSQL
+        shape: cylinder
+    }
+    API Gateway -> User Service
+    User Service -> User Database
+
+    Recomendation Service: {
+        label: Recomendation Service\nPython
+        shape: rectangle
+    }
+    API Gateway -> Recomendation Service
+
+    Feature Store: {
+        label: Feature Store\nClickHouse
+        shape: cylinder
+    }
+    Recomendation Service -> Feature Store
+
+    Catalog Service: {
+        label: Catalog Service\nPython
+        shape: rectangle
+    }
+    API Gateway -> Catalog Service
+
+    Catalog Database: {
+        label: Catalog Database\nPostgreSQL
+        shape: cylinder
+    }
+    Catalog Service -> Catalog Database
+
+    Order Service: {
+        label: Order Service\nPython
+        shape: rectangle
+    }
+    API Gateway -> Order Service
+
+    Order Database: {
+        label: Order Database\nPostgreSQL
+        shape: cylinder
+    }
+    Order Service -> Order Database
+    Order Service -> Catalog Service
+
+    Payment Service: {
+        label: Payment Service\nPython
+        shape: rectangle
+    }
+    Order Service -> Payment Service
+
+    Payment Database: {
+        label: Payment Database\nPostgreSQL
+        shape: cylinder
+    }
+    Payment Service -> Payment Database
+
+    Notification Queue: {
+        label: Notification Queue\nKafka
+        shape: step
+    }
+    Order Service -> Notification Queue
+
+    Notification Service: {
+        label: Notification Service\nPython
+        shape: rectangle
+    }
+    Notification Queue -> Notification Service
+    Notification Service -> Mobile Application
+}
+
+External Payment: {
+    label: External Payment Service
+    shape: rectangle
+}
+Main System.Payment Service -> External Payment
+
+External Email: {
+    label: External Email Service
+    shape: rectangle
+}
+Main System.Notification Service -> External Email
+
+External SMS: {
+    label: External SMS Service
+    shape: rectangle
+}
+Main System.Notification Service -> External SMS
+
+Seller -> Main System.Web Application
+Buyer -> Main System.Web Application
+Buyer -> Main System.Mobile Application

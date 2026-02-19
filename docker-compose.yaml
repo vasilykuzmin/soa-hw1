@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  server:
+    build: src/order_service/
+
+    command: python3 ./main.py
+
+    ports:
+      - 8080:8080
