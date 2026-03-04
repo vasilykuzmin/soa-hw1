@@ -22,3 +22,11 @@
 `go install oss.terrastruct.com/d2@latest`
 
 `d2 diagram.d2 diagram.png`
+
+
+openapi-python-client generate --path ./src/product_service/openapi.yaml --output-path ./src/product_service/lib/ --overwrite
+
+sudo docker run --rm -v "${PWD}:/local" openapitools/openapi-generator-cli generate \
+    -i /local/src/product_service/openapi.yaml \
+    -g python-fastapi \
+    -o /local/src/product_service/lib

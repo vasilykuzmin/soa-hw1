@@ -1,10 +1,24 @@
 version: "3"
 
 services:
-  server:
-    build: src/order_service/
+  # server:
+  #   build: src/order_service/
 
-    command: python3 ./main.py
+  #   command: python3 ./main.py
 
+  #   ports:
+  #     - 8080:8080
+
+  product_service:
+    build: src/product_service/
     ports:
-      - 8080:8080
+      - 8080:8000
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: swagger-ui
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./src/product_service/openapi.yaml:/tmp/openapi.yaml
+    environment:
+      SWAGGER_JSON: /tmp/openapi.yaml
